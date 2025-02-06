@@ -1,0 +1,29 @@
+{
+  "name": "rpc-extension-vscode",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "activationEvents": [
+    "onStartupFinished",
+    "onDidChangeActiveTextEditor"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "compile": "tsc",
+    "watch": "tsc --watch",
+    "pretest": "npm run compile",
+    "test": "echo \"No tests yet!\""
+  },
+  "dependencies": {
+    "@types/vscode": "^1.60.0",
+    "axios": "^1.7.9",
+    "vscode": "^1.1.37",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3",
+    "@types/bun": "latest"
+  }
+}

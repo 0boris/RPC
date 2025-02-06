@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Project Rich Presence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: #2c2f36;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-900">
+    <!-- THE most barebones implementation, just for testing. -->
+    <div class="max-w-sm w-full bg-gray-800 p-6 rounded-lg shadow-lg space-y-4">
+        <div class="flex justify-between items-center">
+            <div class="text-white text-xl font-semibold">VSCode Project</div>
+            <div class="text-gray-400 text-sm">Active File</div>
+        </div>
+
+        <div class="text-white text-2xl font-bold" id="file-name">Waiting for file...</div>
+        <div class="text-gray-400 text-lg" id="language-id">Language...</div>
+        
+        <div class="text-gray-500 text-sm" id="project-folder">Project Folder...</div>
+        
+        <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-full bg-gray-600 flex justify-center items-center text-white font-semibold">
+                <span id="user-avatar">U</span>
+            </div>
+            <div class="text-white text-sm">
+                <div class="font-bold">Username</div>
+                <div class="text-gray-400">Status: Online</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8080');
+
+        socket.onopen = () => {
+            console.log('Connected to WebSocket server');
+        };
+
+        socket.onmessage = (event) => {
+            console.log('Received message from server:', event.data);
+
+            try {
+                const data = JSON.parse(event.data);
+                console.log('Parsed data:', data);
+
+                document.getElementById('file-name').textContent = data.fileName || 'No file name';
+                document.getElementById('language-id').textContent = data.languageId || 'No language ID';
+                document.getElementById('project-folder').textContent = data.projectFolder || 'No project folder';
+                document.getElementById('user-avatar').textContent = data.fileName.charAt(0); // Placeholder for user avatar
+                
+            } catch (error) {
+                console.error('Error parsing JSON data:', error);
+            }
+        };
+
+        socket.onerror = (error) => {
+            console.log('WebSocket Error:', error);
+        };
+
+        socket.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+    </script>
+
+</body>
+</html>
