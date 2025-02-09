@@ -19,6 +19,7 @@
   "dependencies": {
     "@types/vscode": "^1.60.0",
     "axios": "^1.7.9",
+    "simple-git": "^3.27.0",
     "vscode": "^1.1.37",
     "ws": "^8.5.0"
   },

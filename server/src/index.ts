@@ -26,9 +26,15 @@ wss.on('connection', (ws: WebSocket) => {
 });
 
 app.post('/sendData', (req, res) => {
-    const data = req.body;
+    let data = req.body;
 
     console.log('Received HTTP data:', data);
+
+    if (data.fileName) {
+        data = { ...data, type: 'coding' };
+    } else if (data.gameName) {
+        data = { ...data, type: 'playing' };
+    }
 
     clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
